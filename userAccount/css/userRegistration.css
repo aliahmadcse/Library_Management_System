@@ -1,0 +1,31 @@
+.body {
+    margin: 0px;
+    padding: 0px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 18px;
+}
+
+.footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: rgb(248, 249, 250);
+    text-align: center;
+}
+
+#nav-list {
+    margin-left: 30%;
+}
+
+.nav-link {
+    margin: 0px 20px 0px 20px;
+}
+
+.registration-form {
+    width: 90%;
+    margin:auto auto 70px auto;
+}
+#info-para{
+    margin-top:40px;
+}
