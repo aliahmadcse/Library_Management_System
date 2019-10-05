@@ -12,7 +12,9 @@
       crossorigin="anonymous"
     />
     <!-- Attaching css file -->
-    <link rel="stylesheet" href="css/userRegistration.css" />
+    <style>
+    <?php include("css/userRegistration.css"); ?>
+    </style>
     <title>Login</title>
   </head>
   <body>
@@ -35,7 +37,27 @@ function validateCnic($cnic){
   }
   return false;
 }
-
+//validating password
+function validatePassword($password){
+  if (preg_match("/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/",$password)){
+    return true;
+  }
+  return false;
+}
+//validating if password and confirm password matches
+function matchPasswordAndConfirmPassword($password,$confirmPassword){
+  if ($password===$confirmPassword){
+    return true;
+  }
+  return false;
+}
+//validating email address
+function validateEmail($email){
+  if(filter_var($email,FILTER_VALIDATE_EMAIL)){
+    return true;
+  }
+  return false;
+}
 //getting form data
 if ($_SERVER["REQUEST_METHOD"] == "POST"){ 
 $firstName = $_POST["fname"];
@@ -57,6 +79,19 @@ if (!validateName($lastName)){
 if (!validateCnic($cnic)){
   $cnicErr="Cnic is not valid";
 }
+
+if (!validatePassword($password)){
+  $passwordErr="Password is not valid";
+}
+
+if (!matchPasswordAndConfirmPassword($password,$confirmPassword)){
+  $passwordErr="Password and Confirm password does not match";
+}
+
+if (!validateEmail($email)){
+  $emailErr="Email is not valid";
+}
+
 }
 
 ?>
@@ -102,8 +137,9 @@ if (!validateCnic($cnic)){
        echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>"
       method="post">
         <div class="form-group">
-          <label for="firstName">First Name</label>
-          <span class="error text-danger"> *<?php echo $firstNameErr;?></span>
+          <label for="firstName">First Name *</label>
+          <span class="error text-danger">
+           <?php echo $firstNameErr;?></span>
           <input
             type="text"
             name="fname"
@@ -116,8 +152,8 @@ if (!validateCnic($cnic)){
           />
         </div>
         <div class="form-group">
-          <label for="lastName">Last Name</label>
-          <span class="error text-danger"> *<?php echo $lastNameErr;?></span>
+          <label for="lastName">Last Name *</label>
+          <span class="error text-danger"> <?php echo $lastNameErr;?></span>
           <input
             type="text"
             name="lname"
@@ -130,8 +166,8 @@ if (!validateCnic($cnic)){
           />
         </div>
         <div class="form-group">
-          <label for="emailAddress">Email address</label>
-          <span class="error text-danger"> *<?php echo $emailErr;?></span>
+          <label for="emailAddress">Email address *</label>
+          <span class="error text-danger"> <?php echo $emailErr;?></span>
           <input
             type="email"
             name="email"
@@ -147,8 +183,8 @@ if (!validateCnic($cnic)){
           >
         </div>
         <div class="form-group">
-          <label for="cnic">CNIC</label>
-          <span class="error text-danger"> *<?php echo $cnicErr;?></span>
+          <label for="cnic">CNIC *</label>
+          <span class="error text-danger"> <?php echo $cnicErr;?></span>
           <input
             type="text"
             name="cnic"
@@ -165,8 +201,8 @@ if (!validateCnic($cnic)){
           >
         </div>
         <div class="form-group">
-          <label for="password">Password</label>
-          <span class="error text-danger"> *<?php echo $passwordErr;?></span>
+          <label for="password">Password *</label>
+          <span class="error text-danger"> <?php echo $passwordErr;?></span>
           <input
             type="password"
             name="password"
@@ -178,13 +214,14 @@ if (!validateCnic($cnic)){
             required
           />
           <small id="emailHelp" class="form-text text-muted"
-            >Password must contain upperCase,lowerCase as well as Numeric
-            charaters</small
+            >Password must contain Minimum eight characters, at least
+             one uppercase letter, one lowercase letter, one number and
+             no special character</small
           >
         </div>
         <div class="form-group">
-          <label for="confirmPassword">Confirm Password</label>
-          <span class="error text-danger"> *<?php echo $passwordErr;?></span>
+          <label for="confirmPassword">Confirm Password *</label>
+          <span class="error text-danger"> <?php echo $passwordErr;?></span>
           <input
             type="password"
             name="cpassword"
@@ -196,13 +233,14 @@ if (!validateCnic($cnic)){
             required
           />
           <small id="emailHelp" class="form-text text-muted"
-            >Password must contain upperCase,lowerCase as well as Numeric
-            charaters</small
+            >Password must contain Minimum eight characters, at least
+             one uppercase letter, one lowercase letter, one number and
+             no special character</small
           >
         </div>
         <div class="form-group">
-          <label for="address">Address:</label>
-          <span class="error text-danger"> *<?php echo $addressErr;?></span>
+          <label for="address">Address *</label>
+          <span class="error text-danger"> <?php echo $addressErr;?></span>
           <input
             type="text"
             name="address"
@@ -226,7 +264,6 @@ if (!validateCnic($cnic)){
         <small>&copy; Copyright 2019, Library Management System</small>
       </footer>
     </div>
-
     <!-- Bootstrap CDN-->
     <script
       src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
