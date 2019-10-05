@@ -20,78 +20,134 @@
   <body>
 
 <?php
-$firstName=$lastName=$email=$cnic=$password=$confirmPassword=$address="";
-$firstNameErr=$lastNameErr=$emailErr=$cnicErr=$passwordErr=$addressErr="";
 
-//validating user first name
-function validateName($name){
-  if (preg_match("/^[a-zA-z]+$/",$name)){
-    return true;
+class formHandling{
+
+  public $firstName;
+  public $lastName;
+  public $email;
+  public $cnic;
+  public $password;
+  public $confirmPassword;
+  public $address;
+  public $firstNameErr;
+  public $lastNameErr;
+  public $emailErr;
+  public $cnicErr;
+  public $passwordErr;
+  public $addressErr;
+
+  public function __construct(){
+    $this->firstName=$this->lastName=$this->email=$this->cnic=$this->password=null;
+    $this->confirmPassword=$this->address=null; 
+    $this->firstNameErr=$this->lastNameErr=$this->emailErr=$this->cnicErr=null;
+    $this->passwordErr=$this->addressErr=null;
   }
-  return false;
-}
-//validating cnic
-function validateCnic($cnic){
-  if (preg_match("/\d{5}-\d{7}-\d{1}/",$cnic)){
-    return true;
+  //getting form data
+  function getFormData(){
+    $this->firstName = $_POST["fname"];
+    $this->lastName = $_POST["lname"];
+    $this->email= $_POST["email"];
+    $this->cnic = $_POST["cnic"];
+    $this->password = $_POST["password"];
+    $this->confirmPassword=$_POST["cpassword"];
+    $this->address= $_POST["address"];
   }
-  return false;
-}
-//validating password
-function validatePassword($password){
-  if (preg_match("/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/",$password)){
-    return true;
+  //validating user first name
+  function validateName($name){
+    if (preg_match("/^[a-zA-z]+$/",$name)){
+      return true;
+    }
+    return false;
   }
-  return false;
-}
-//validating if password and confirm password matches
-function matchPasswordAndConfirmPassword($password,$confirmPassword){
-  if ($password===$confirmPassword){
-    return true;
+
+  //validating cnic
+  function validateCnic(){
+    if (preg_match("/\d{5}-\d{7}-\d{1}/",$this->cnic)){
+      return true;
+    }
+    return false;
   }
-  return false;
-}
-//validating email address
-function validateEmail($email){
-  if(filter_var($email,FILTER_VALIDATE_EMAIL)){
-    return true;
+
+  //validating password
+  function validatePassword(){
+    if (preg_match("/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/",$this->password)){
+      return true;
+    }
+    return false;
   }
-  return false;
-}
-//getting form data
+
+  //validating if password and confirm password matches
+  function matchPasswordAndConfirmPassword(){
+    if ($this->password===$this->confirmPassword){
+      return true;
+    }
+    return false;
+  }
+
+  //validating email address
+  function validateEmail(){
+    if(filter_var($this->email,FILTER_VALIDATE_EMAIL)){
+      return true;
+    }
+    return false;
+  }
+
+  //inserting data into database
+  public function insertData(){
+    if (!$this->validateName($this->firstName)){
+      $this->firstNameErr="First Name is not valid";
+      return;
+    }
+    if (!$this->validateName($this->lastName)){
+      $this->lastNameErr="Last Name is not valid";
+      return;
+    }
+    if (!$this->validateCnic()){
+      $this->cnicErr="Cnic is not valid";
+      return;
+    }
+    if (!$this->validatePassword()){
+      $this->passwordErr="Password is not valid";
+      return;
+    }
+    if (!$this->matchPasswordAndConfirmPassword()){
+      $this->passwordErr="Password and Confirm password does not match";
+      return;
+    }
+    if (!$this->validateEmail()){
+      $this->emailErr="Email is not valid";
+      return;
+    }
+    $servername = "localhost";
+    $username = "root";
+    $password = "";
+    $dbName='library_management_system';
+    $conn = new mysqli($servername, $username, $password,$dbName);
+
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+    }
+
+    $sql = "INSERT INTO userregistration (firstName, lastName, email, cnic, password,
+     address, forgotPasswordCode) VALUES ($this->firstName, $this->lastName, 
+     $this->email, $this->cnic, $this->password, $this->address,0)";
+
+    if ($conn->query($sql) === TRUE) {
+      echo "New record created successfully";
+    } else {
+      echo "Error: " . $sql . "<br>" . $conn->error;
+    }
+    $conn->close();
+  }
+
+}//end of formHandling class
+
+//creating an instance of the class
+$formhandle=new formHandling();
 if ($_SERVER["REQUEST_METHOD"] == "POST"){ 
-$firstName = $_POST["fname"];
-$lastName = $_POST["lname"];
-$email= $_POST["email"];
-$cnic = $_POST["cnic"];
-$password = $_POST["password"];
-$confirmPassword=$_POST["cpassword"];
-$address = $_POST["address"]; 
-
-if (!validateName($firstName)){
-  $firstNameErr="First Name is not valid";
-}
-
-if (!validateName($lastName)){
-  $lastNameErr="Last Name is not valid";
-  }
-
-if (!validateCnic($cnic)){
-  $cnicErr="Cnic is not valid";
-}
-
-if (!validatePassword($password)){
-  $passwordErr="Password is not valid";
-}
-
-if (!matchPasswordAndConfirmPassword($password,$confirmPassword)){
-  $passwordErr="Password and Confirm password does not match";
-}
-
-if (!validateEmail($email)){
-  $emailErr="Email is not valid";
-}
-
+  $formhandle->getFormData();
+  $formhandle->insertData();
 }
 
 ?>
@@ -139,11 +195,11 @@ if (!validateEmail($email)){
         <div class="form-group">
           <label for="firstName">First Name *</label>
           <span class="error text-danger">
-           <?php echo $firstNameErr;?></span>
+           <?php echo $formhandle->firstNameErr;?></span>
           <input
             type="text"
             name="fname"
-            value="<?php echo $firstName; ?>"
+            value="<?php echo $formhandle->firstName; ?>"
             class="form-control user-email"
             id="firstName"
             aria-describedby="emailHelp"
@@ -153,11 +209,12 @@ if (!validateEmail($email)){
         </div>
         <div class="form-group">
           <label for="lastName">Last Name *</label>
-          <span class="error text-danger"> <?php echo $lastNameErr;?></span>
+          <span class="error text-danger">
+           <?php echo $formhandle->lastNameErr;?></span>
           <input
             type="text"
             name="lname"
-            value="<?php echo $lastName; ?>"
+            value="<?php echo $formhandle->lastName; ?>"
             class="form-control user-email"
             id="lastName"
             aria-describedby="emailHelp"
@@ -167,11 +224,12 @@ if (!validateEmail($email)){
         </div>
         <div class="form-group">
           <label for="emailAddress">Email address *</label>
-          <span class="error text-danger"> <?php echo $emailErr;?></span>
+          <span class="error text-danger">
+           <?php echo $formhandle->emailErr;?></span>
           <input
             type="email"
             name="email"
-            value="<?php echo $email; ?>"
+            value="<?php echo $formhandle->email; ?>"
             class="form-control user-email"
             id="emailAddress"
             aria-describedby="emailHelp"
@@ -184,11 +242,12 @@ if (!validateEmail($email)){
         </div>
         <div class="form-group">
           <label for="cnic">CNIC *</label>
-          <span class="error text-danger"> <?php echo $cnicErr;?></span>
+          <span class="error text-danger"> 
+          <?php echo $formhandle->cnicErr;?></span>
           <input
             type="text"
             name="cnic"
-            value="<?php echo $cnic; ?>"
+            value="<?php echo $formhandle->cnic; ?>"
             class="form-control user-email"
             id="cnic"
             aria-describedby="emailHelp"
@@ -202,11 +261,12 @@ if (!validateEmail($email)){
         </div>
         <div class="form-group">
           <label for="password">Password *</label>
-          <span class="error text-danger"> <?php echo $passwordErr;?></span>
+          <span class="error text-danger">
+           <?php echo $formhandle->passwordErr;?></span>
           <input
             type="password"
             name="password"
-            value="<?php echo $password; ?>"
+            value="<?php echo $formhandle->password; ?>"
             class="form-control user-email"
             id="password"
             aria-describedby="emailHelp"
@@ -221,11 +281,12 @@ if (!validateEmail($email)){
         </div>
         <div class="form-group">
           <label for="confirmPassword">Confirm Password *</label>
-          <span class="error text-danger"> <?php echo $passwordErr;?></span>
+          <span class="error text-danger">
+           <?php echo $formhandle->passwordErr;?></span>
           <input
             type="password"
             name="cpassword"
-            value="<?php echo $confirmPassword; ?>"
+            value="<?php echo $formhandle->confirmPassword; ?>"
             class="form-control user-email"
             id="confirmPassword"
             aria-describedby="emailHelp"
@@ -240,11 +301,12 @@ if (!validateEmail($email)){
         </div>
         <div class="form-group">
           <label for="address">Address *</label>
-          <span class="error text-danger"> <?php echo $addressErr;?></span>
+          <span class="error text-danger">
+           <?php echo $formhandle->addressErr;?></span>
           <input
             type="text"
             name="address"
-            value="<?php echo $address; ?>"
+            value="<?php echo $formhandle->address; ?>"
             class="form-control user-email"
             id="address"
             aria-describedby="emailHelp"
