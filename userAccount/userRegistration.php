@@ -16,6 +16,51 @@
     <title>Login</title>
   </head>
   <body>
+
+<?php
+$firstName=$lastName=$email=$cnic=$password=$confirmPassword=$address="";
+$firstNameErr=$lastNameErr=$emailErr=$cnicErr=$passwordErr=$addressErr="";
+
+//validating user first name
+function validateName($name){
+  if (preg_match("/^[a-zA-z]+$/",$name)){
+    return true;
+  }
+  return false;
+}
+//validating cnic
+function validateCnic($cnic){
+  if (preg_match("/\d{5}-\d{7}-\d{1}/",$cnic)){
+    return true;
+  }
+  return false;
+}
+
+//getting form data
+if ($_SERVER["REQUEST_METHOD"] == "POST"){ 
+$firstName = $_POST["fname"];
+$lastName = $_POST["lname"];
+$email= $_POST["email"];
+$cnic = $_POST["cnic"];
+$password = $_POST["password"];
+$confirmPassword=$_POST["cpassword"];
+$address = $_POST["address"]; 
+
+if (!validateName($firstName)){
+  $firstNameErr="First Name is not valid";
+}
+
+if (!validateName($lastName)){
+  $lastNameErr="Last Name is not valid";
+  }
+
+if (!validateCnic($cnic)){
+  $cnicErr="Cnic is not valid";
+}
+}
+
+?>
+
     <div class="fluid-container">
       <!-- Responsive Bootstrap Navigation Bar -->
       <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -53,12 +98,16 @@
         <p>Please Enter the following Information</p>
       </div>
       <!-- login form -->
-
-      <form class="registration-form" action="">
+      <form class="registration-form" action="<?php
+       echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>"
+      method="post">
         <div class="form-group">
           <label for="firstName">First Name</label>
+          <span class="error text-danger"> *<?php echo $firstNameErr;?></span>
           <input
             type="text"
+            name="fname"
+            value="<?php echo $firstName; ?>"
             class="form-control user-email"
             id="firstName"
             aria-describedby="emailHelp"
@@ -68,8 +117,11 @@
         </div>
         <div class="form-group">
           <label for="lastName">Last Name</label>
+          <span class="error text-danger"> *<?php echo $lastNameErr;?></span>
           <input
             type="text"
+            name="lname"
+            value="<?php echo $lastName; ?>"
             class="form-control user-email"
             id="lastName"
             aria-describedby="emailHelp"
@@ -79,8 +131,11 @@
         </div>
         <div class="form-group">
           <label for="emailAddress">Email address</label>
+          <span class="error text-danger"> *<?php echo $emailErr;?></span>
           <input
             type="email"
+            name="email"
+            value="<?php echo $email; ?>"
             class="form-control user-email"
             id="emailAddress"
             aria-describedby="emailHelp"
@@ -93,8 +148,11 @@
         </div>
         <div class="form-group">
           <label for="cnic">CNIC</label>
+          <span class="error text-danger"> *<?php echo $cnicErr;?></span>
           <input
-            type="number"
+            type="text"
+            name="cnic"
+            value="<?php echo $cnic; ?>"
             class="form-control user-email"
             id="cnic"
             aria-describedby="emailHelp"
@@ -108,8 +166,11 @@
         </div>
         <div class="form-group">
           <label for="password">Password</label>
+          <span class="error text-danger"> *<?php echo $passwordErr;?></span>
           <input
             type="password"
+            name="password"
+            value="<?php echo $password; ?>"
             class="form-control user-email"
             id="password"
             aria-describedby="emailHelp"
@@ -123,8 +184,11 @@
         </div>
         <div class="form-group">
           <label for="confirmPassword">Confirm Password</label>
+          <span class="error text-danger"> *<?php echo $passwordErr;?></span>
           <input
             type="password"
+            name="cpassword"
+            value="<?php echo $confirmPassword; ?>"
             class="form-control user-email"
             id="confirmPassword"
             aria-describedby="emailHelp"
@@ -138,8 +202,11 @@
         </div>
         <div class="form-group">
           <label for="address">Address:</label>
+          <span class="error text-danger"> *<?php echo $addressErr;?></span>
           <input
             type="text"
+            name="address"
+            value="<?php echo $address; ?>"
             class="form-control user-email"
             id="address"
             aria-describedby="emailHelp"
