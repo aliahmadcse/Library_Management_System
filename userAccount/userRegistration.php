@@ -129,9 +129,9 @@ class formHandling{
         die("Connection failed: " . $conn->connect_error);
     }
 
-    $sql = "INSERT INTO userregistration (firstName, lastName, email, cnic, password,
-     address, forgotPasswordCode) VALUES ($this->firstName, $this->lastName, 
-     $this->email, $this->cnic, $this->password, $this->address,0)";
+    $sql = "INSERT INTO `userregistration` (`firstName`, `lastName`, `email`, `cnic`, `password`,
+     `address`, `forgotPasswordCode`) VALUES ('$this->firstName', '$this->lastName', 
+     '$this->email', '$this->cnic', '$this->password', '$this->address','0')";
 
     if ($conn->query($sql) === TRUE) {
       echo "New record created successfully";
@@ -139,6 +139,7 @@ class formHandling{
       echo "Error: " . $sql . "<br>" . $conn->error;
     }
     $conn->close();
+    header("location:userLogin.php");
   }
 
 }//end of formHandling class
