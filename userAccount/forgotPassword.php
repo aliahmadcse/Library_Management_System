@@ -16,6 +16,78 @@
     <title>Forgot Password?</title>
   </head>
   <body>
+  <?php 
+
+  class forgotPasswordHandler{
+    public $error;
+    private $email;
+    private $randomCode; 
+
+    public function __construct(){
+      $this->error=null;
+      $this->email=null;
+      $this->randomCode=null; 
+    }
+
+    public function getFormData(){
+      $this->email=$_POST["email"];
+    }
+
+    public function generateRandomCode(){
+      $this->randomCode=rand(100000,999999);
+    }
+
+    public function updateCodeInDataBase(){
+      $servername = "localhost";
+      $username = "root";
+      $password = "";
+      $dbName='library_management_system';
+      $conn = new mysqli($servername, $username, $password,$dbName);
+
+      if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+      }
+
+      $sql="UPDATE `userregistration` SET `forgotPasswordCode`='$this->randomCode'
+      WHERE `email`='$this->email'";
+      
+      $result=$conn->query($sql);
+      $conn->close();
+    }
+    //sending email
+    public function sendEmail(){
+      require_once("../PHPMailer/PHPMailerAutoload.php");
+
+      $mail=new PHPMailer();
+      $mail->isSMTP();
+      $mail->SMTPAuth=true;
+      $mail->SMTPSecure='ssl';
+      $mail->Host='smtp.gmail.com';
+      $mail->Port='465';
+      $mail->isHTML();
+      $mail->Username="aliahmadcse@gmail.com";
+      $mail->Password="";
+      $mail->SetFrom($this->email);
+      $mail->Subject="Reset Password Code";
+      $mail->Body="Your reset password code is ".$this->randomCode;
+      $mail->AddAddress($this->email);
+      if (!$mail->Send()){
+        echo "Mailer Error: " . $mail->ErrorInfo;
+      }
+
+    }
+
+  }//class end
+
+  $passwordHandle=new forgotPasswordHandler();
+  if ($_SERVER["REQUEST_METHOD"] == "POST"){ 
+    $passwordHandle->getFormData();
+    $passwordHandle->generateRandomCode();
+    $passwordHandle->updateCodeInDataBase();
+    $passwordHandle->sendEmail();
+
+  }
+  ?>
     <div class="fluid-container">
       <!-- Responsive Bootstrap Navigation Bar -->
       <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -49,11 +121,14 @@
         </div>
       </nav>
       <!-- forgot-password form -->
-      <form class="forgot-password-form">
+      <form class="forgot-password-form" method="post" action="<?php
+       echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>"
+       >
         <div class="form-group">
           <label for="exampleInputEmail1">Enter your Email address:</label>
           <input
             type="email"
+            name="email"
             class="form-control user-email"
             id="exampleInputEmail1"
             aria-describedby="emailHelp"
