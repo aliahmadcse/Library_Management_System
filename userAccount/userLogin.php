@@ -24,8 +24,10 @@
     <title>Login</title>
   </head>
   <body>
-  <?php
 
+  <?php
+  session_start();
+  
   class LoginHandler{
     private $email;
     private $password;
@@ -57,9 +59,11 @@
       $result=$conn->query($sql);
       $conn->close();
       if ($result->num_rows>0){
-        header("location: ../index.php");
+        $_SESSION["email"]=$this->email;
+        header("location: ../userInterface/interface.php");
       }
       else{
+        $_SESSION["email"]=null;
         $this->error="Your Credentials doesn't match";
       }
   }
@@ -71,7 +75,7 @@
     $loginHandle->getFormData();
     $loginHandle->validateCredentials();
   }
-  
+  // session_destroy();
   ?>
     <div class="fluid-container">
       <!-- Responsive Bootstrap Navigation Bar -->
