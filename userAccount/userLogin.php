@@ -4,6 +4,11 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <!-- cdn for animate.css library -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css"
+    />
     <!-- CDN for bootstrap -->
     <link
       rel="stylesheet"
@@ -12,10 +17,62 @@
       crossorigin="anonymous"
     />
     <!-- Attaching css file -->
-    <link rel="stylesheet" href="css/userLogin.css" />
+    <style>
+    <?php include("css/userLogin.css"); ?>
+    </style>
+
     <title>Login</title>
   </head>
   <body>
+  <?php
+
+  class LoginHandler{
+    private $email;
+    private $password;
+    public $error;
+
+    public function _construct(){
+      $this->email=null;
+      $this->password=null;
+      $this->error=null;
+    }
+
+    public function getFormData(){
+      $this->email=$_POST["email"];
+      $this->password=$_POST["password"];
+    }
+    public function validateCredentials(){
+      $servername = "localhost";
+      $username = "root";
+      $password = "";
+      $dbName='library_management_system';
+      $conn = new mysqli($servername, $username, $password,$dbName);
+
+      if ($conn->connect_error) {
+          die("Connection failed: " . $conn->connect_error);
+      }
+      $sql="SELECT * FROM `userregistration` WHERE `email`='$this->email' 
+      and `password`='$this->password'";
+
+      $result=$conn->query($sql);
+      $conn->close();
+      if ($result->num_rows>0){
+        header("location: ../index.php");
+      }
+      else{
+        $this->error="Your Credentials doesn't match";
+      }
+  }
+  }//end of class
+
+  $loginHandle=new LoginHandler();
+
+  if ($_SERVER["REQUEST_METHOD"] == "POST"){
+    $loginHandle->getFormData();
+    $loginHandle->validateCredentials();
+  }
+  
+  ?>
     <div class="fluid-container">
       <!-- Responsive Bootstrap Navigation Bar -->
       <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -48,12 +105,18 @@
           </ul>
         </div>
       </nav>
+      <div class="error text-danger text-center animated fadeInUpBig">
+           <?php echo $loginHandle->error; ?></div>
       <!-- login form -->
-      <form class="login">
+      <form class="login" method="post" action="<?php
+       echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>"
+       >
+       
         <div class="form-group">
           <label for="exampleInputEmail1">Email address</label>
           <input
             type="email"
+            name="email"
             class="form-control user-email"
             id="exampleInputEmail1"
             aria-describedby="emailHelp"
@@ -67,6 +130,7 @@
         <div class="form-group">
           <label for="exampleInputPassword1">Password</label>
           <input
+            name="password"
             type="password"
             class="form-control user-password"
             id="exampleInputPassword1"

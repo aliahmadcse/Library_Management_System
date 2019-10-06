@@ -3,6 +3,7 @@
     padding: 0px;
     font-family: Arial, Helvetica, sans-serif;
     font-size: 18px;
+    
 }
 
 #nav-list {
@@ -15,7 +16,7 @@
 
 .login {
     width: 90%;
-    margin: 70px auto auto auto;
+    margin: 50px auto auto auto;
 }
 
 #forgot-password-link,
@@ -36,4 +37,10 @@
     width: 100%;
     background-color: rgb(248, 249, 250);
     text-align: center;
+}
+
+.error {
+    /* text-align: center; */
+    margin-top:20px;
+    font-size:30px;
 }
