@@ -12,7 +12,9 @@
       crossorigin="anonymous"
     />
     <!-- Attaching css file -->
-    <link rel="stylesheet" href="css/forgotPassword.css" />
+    <style>
+    <?php include("css/forgotPassword.css"); ?>
+    </style>
     <title>Forgot Password?</title>
   </head>
   <body>
@@ -74,7 +76,7 @@
       if (!$mail->Send()){
         echo "Mailer Error: " . $mail->ErrorInfo;
       }
-
+      header("location: enterResetCode.php")
     }
 
   }//class end
@@ -121,6 +123,9 @@
         </div>
       </nav>
       <!-- forgot-password form -->
+      <h4 class="text-center text-primary forgot-password-header">
+      Changing your password is Simple. Just enter
+      your email address below to continue</h4>
       <form class="forgot-password-form" method="post" action="<?php
        echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>"
        >
@@ -137,13 +142,14 @@
           />
         </div>
         <button type="submit" class="btn btn-primary btn-block" id="btn-login">
-          Reset Password Here
+          Click to continue
         </button>
       </form>
       <footer class="footer">
         <small>&copy; Copyright 2019, Library Management System</small>
       </footer>
     </div>
+
     <!-- Bootstrap CDN-->
     <script
       src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
