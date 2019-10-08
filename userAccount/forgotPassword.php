@@ -76,7 +76,7 @@
       if (!$mail->Send()){
         echo "Mailer Error: " . $mail->ErrorInfo;
       }
-      header("location: enterResetCode.php")
+      header("location: enterResetCode.php");
     }
 
   }//class end
