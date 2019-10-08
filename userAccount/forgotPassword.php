@@ -19,7 +19,7 @@
   </head>
   <body>
   <?php 
-
+  session_start();
   class forgotPasswordHandler{
     public $error;
     private $email;
@@ -68,13 +68,16 @@
       $mail->Port='465';
       $mail->isHTML();
       $mail->Username="aliahmadcse@gmail.com";
-      $mail->Password="";
+      $mail->Password="2446232555444";
       $mail->SetFrom($this->email);
       $mail->Subject="Reset Password Code";
       $mail->Body="Your reset password code is ".$this->randomCode;
       $mail->AddAddress($this->email);
+      
+      $_SESSION['forgotEmail']=$this->email;
       if (!$mail->Send()){
         echo "Mailer Error: " . $mail->ErrorInfo;
+        $_SESSION['forgotEmail']=null;
       }
       header("location: enterResetCode.php");
     }

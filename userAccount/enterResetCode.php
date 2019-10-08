@@ -7,6 +7,10 @@
     <title>Document</title>
 </head>
 <body>
+<?php 
+    session_start();
+    echo $_SESSION["forgotEmail"];
     
+?>
 </body>
 </html>
