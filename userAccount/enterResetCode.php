@@ -52,7 +52,7 @@
       $conn->close();
 
       if ($result->num_rows>0){
-        header("location: resetCode.php");
+        header("location: resetPassword.php");
       }
       else{
         $this->codeErr="Code is invalid";

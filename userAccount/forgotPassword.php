@@ -68,7 +68,7 @@
       $mail->Port='465';
       $mail->isHTML();
       $mail->Username="aliahmadcse@gmail.com";
-      $mail->Password="2446232555444";
+      $mail->Password="";
       $mail->SetFrom($this->email);
       $mail->Subject="Reset Password Code";
       $mail->Body="Your reset password code is ".$this->randomCode;
