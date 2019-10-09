@@ -155,9 +155,9 @@
           >
         </div>
       </form>
-      <footer class="footer">
-        <small>&copy; Copyright 2019, Library Management System</small>
-      </footer>
+      <?php 
+      include("footer.php");
+      ?>
     </div>
     <!-- Bootstrap CDN-->
     <script

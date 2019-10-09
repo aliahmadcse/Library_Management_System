@@ -12,12 +12,3 @@ body {
 .nav-link {
     margin: 0px 20px 0px 20px;
 }
-
-.footer {
-    position: fixed;
-    left: 0;
-    bottom: 0;
-    width: 100%;
-    background-color:rgb(248, 249, 250);
-    text-align: center;
-}
