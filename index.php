@@ -43,7 +43,8 @@
               >
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Admin</a>
+              <a class="nav-link" href="adminInterface/login.php">
+              Admin</a>
             </li>
           </ul>
         </div>
