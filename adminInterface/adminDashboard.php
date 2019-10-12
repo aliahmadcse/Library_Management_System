@@ -1,101 +1,114 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <!-- CDN for bootstrap -->
-    <link
-      rel="stylesheet"
-      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
-      integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
-      crossorigin="anonymous"
-    />
-    <!-- font awesomo -->
-    <link
-      rel="stylesheet"
-      href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css"
-      integrity="sha384-XdYbMnZ/QjLh6iI4ogqCTaIjrFk87ip+ekIjefZch0Y+PvJ8CDYtEs1ipDmPorQ+"
-      crossorigin="anonymous"
-    />
-    <!-- adding style sheets -->
-    <style>
-        <?php include ("css/adminDashboard.css") ?>
-    </style>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
     <title>Admin Dashboard</title>
-</head>
-<body>
-    <div class="container-fluid">
-        <div class="header">
-            <img src="../assets/header.jpg" alt="header-img" 
-            class="header-img">
-        </div>
-        <div class="row">
-            <div class="col-xs-3 nav-bar" >
-                <nav>
-                    <div class="link-wrapper">
-                    <a class="nav-link" id="addBookLink" href="#">
-                        Add a book</a><hr>
-                    </div>
-                    <div class="link-wrapper">
-                    <a class="nav-link" id="editBookLink" href="#">
-                        Edit a book</a><hr>
-                    </div class="link-wrapper">
-                    <div class="link-wrapper">
-                    <a class="nav-link" href="#">Delete a book</a>
-                    </div>
-                </nav>
-            </div>
-            <div class="col-xs-8 forms">
-                <h2 class="text-center text-primary form-header">
-                    Add a new book</h2>
-                <form class="add-book-form">
-                    <label for="bookName">Enter Book Name</label>
-                    <input
-                    type="text"
-                    id="bookName"
-                    class="form-control form-element"
-                    name="bookName"
-                    placeholder="Enter book name"
-                    required
-                    >
-                    <button class="btn btn-primary btn-block form-element">
-                        Add this book</button>
-                </form>
-                <form class="search-form">
-                    <label for="searchBook">Search the book to edit</label>
-                    <input
-                    type="search"
-                    id="searchBook"
-                    class="form-control"
-                    placeholder="Search"
-                    >
-                </form>
-                <form class="edit-book-form">
-                    <label for="bookName">Book Name</label>
-                    <input
-                    type="text"
-                    id="bookName"
-                    class="form-control form-element"
-                    name="bookName"
-                    placeholder="Enter book name"
-                    required
-                    value=""
-                    >
-                    <button class="btn btn-primary btn-block form-element">
-                        Confirm Edit</button>
 
-                </form>
-            </div>
+    <!-- Bootstrap CSS CDN -->
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css"
+      integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4"
+      crossorigin="anonymous"
+    />
+    <!-- Our Custom CSS -->
+    <style>
+        <?php include ("css/adminDashboardNav.css")?>
+        <?php include ("css/adminDashboard.css")?>
+    </style>
+
+    <!-- Font Awesome JS -->
+    <script
+      defer
+      src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js"
+      integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      defer
+      src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js"
+      integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY"
+      crossorigin="anonymous"
+    ></script>
+  </head>
+
+  <body>
+    <div class="wrapper">
+      <!-- Sidebar Holder -->
+      <nav id="sidebar">
+        <div class="sidebar-header">
+          <h3>Welcome Admin</h3>
         </div>
+
+        <ul class="list-unstyled components">  
+            <p class="menu-header">Main Menus</p>
+          <li>
+            <a href="#">Add a new Book</a>
+          </li>
+          <li>
+            <a href="#">Edit a Book</a>
+          </li>
+          <li>
+            <a href="#">Remove a Book</a>
+          </li>
+        </ul>
+      </nav>
+
+      <!-- Page Content Holder -->
+      <div id="content">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+          <div class="container-fluid">
+            <button type="button" id="sidebarCollapse" class="navbar-btn">
+              <span></span>
+              <span></span>
+              <span></span>
+            </button>
+            <button
+              class="btn btn-dark d-inline-block d-lg-none ml-auto"
+              type="button"
+              data-toggle="collapse"
+              data-target="#navbarSupportedContent"
+              aria-controls="navbarSupportedContent"
+              aria-expanded="false"
+              aria-label="Toggle navigation"
+            >
+              <i class="fas fa-align-justify"></i>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+              <ul class="nav navbar-nav ml-auto">
+                <li class="nav-item">
+                  <a class="nav-link" href="#">Logout</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </nav>
+        <div id="mystyle">
+        <h2 id="heading2">Hello World</h2>
+        <button id="check">Click me</button>
+        </div>
+      </div>
     </div>
-
-    <?php include ("../userAccount/footer.php")?>
-      <!-- jquery -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js">
-    </script>
-
-    <!-- attaching js file -->
+    <!-- jQuery CDN  -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <!-- Popper.JS -->
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"
+      integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ"
+      crossorigin="anonymous"
+    ></script>
+    <!-- Bootstrap JS -->
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"
+      integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm"
+      crossorigin="anonymous"
+    ></script>
+    <!-- nav bar script -->
     <script src="js/adminDashboard.js"></script>
-</body>
+    <script src="js/adminDashboardNav.js"></script>
+  </body>
 </html>
