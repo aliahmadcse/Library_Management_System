@@ -205,6 +205,7 @@
               required
               >
               <button type="submit" name="new-book-submit"
+              onclick="javascript:return confirm('Are you sure you want to add this book?');"
                class="btn btn-primary btn-block form-element">
                 Add new book
               </button>
