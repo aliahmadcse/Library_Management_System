@@ -33,9 +33,71 @@
       integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY"
       crossorigin="anonymous"
     ></script>
+
+    <!-- animated css library -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css"
+    />
   </head>
 
   <body>
+    <?php
+    class AddNewBook{
+      private $bookName;
+      private $authorName;
+      private $noOfCopies;
+      private $edition;
+      private $category;
+      public $confirmMessage;
+
+      public function construct(){
+        $this->bookName=null;
+        $this->authorName=null;
+        $this->noOfCopies=null;
+        $this->edition=null;
+        $this->category=null;
+        $this->confirmMessage=null;
+      }
+      public function getFormData(){
+        $this->bookName=$_POST["bookName"];
+        $this->authorName=$_POST["authorName"];
+        $this->noOfCopies=$_POST["numberOfCopies"];
+        $this->edition=$_POST["bookEdition"];
+        $this->category=$_POST["bookCategory"];
+      }
+      public function insertData(){
+      $servername = "localhost";
+      $username = "root";
+      $password = "";
+      $dbName = 'library_management_system';
+      $conn = new mysqli($servername, $username, $password, $dbName);
+
+      if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+      }
+
+      $sql = "INSERT INTO `books` (`bookName`, `authorName`, `numberOfCopies`, 
+      `edition`, `category`) VALUES ('$this->bookName', '$this->authorName', 
+      '$this->noOfCopies', '$this->edition', '$this->category')";
+
+      if ($conn->query($sql) === TRUE) {
+        $this->confirmMessage="Book added successfully";
+      } else {
+        echo "Error: " . $sql . "<br>" . $conn->error;
+      }
+      $conn->close();
+        }
+    } //end of class AddNewBook
+
+//new book form submit
+    $addNewBookObj = new AddNewBook();
+    if (isset($_POST['new-book-submit'])) {    
+        $addNewBookObj->getFormData();
+        $addNewBookObj->insertData();
+      }
+
+    ?>
     <div class="wrapper">
       <!-- Sidebar Holder -->
       <nav id="sidebar">
@@ -92,7 +154,11 @@
           <div class="col-12">
             <h2 class="form-header text-center text-primary">Add a new Book</h2>
             <!-- add book form -->
-            <form class="add-book-form">
+            <form class="add-book-form" method="post" 
+            action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
+            <div class="text-center text-info confirmMessage animated rollIn">
+              <?php echo $addNewBookObj->confirmMessage;?>
+            </div>
             <label for="bookName">Book Name</label>  
             <input
               name="bookName"
@@ -111,7 +177,7 @@
               placeholder="Enter book author name"
               required
               >
-              <label for="numberOfCopies">No of copies</label>  
+              <label for="numberOfCopies">Number of copies</label>  
             <input
               type="number"
               name="numberOfCopies"
