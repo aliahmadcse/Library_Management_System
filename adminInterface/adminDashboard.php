@@ -46,13 +46,13 @@
         <ul class="list-unstyled components">  
             <p class="menu-header">Main Menus</p>
           <li>
-            <a href="#">Add a new Book</a>
+            <a href="#" class="addBookLink">Add a new Book</a>
           </li>
           <li>
-            <a href="#">Edit a Book</a>
+            <a href="#" class="editBookLink">Edit a Book</a>
           </li>
           <li>
-            <a href="#">Remove a Book</a>
+            <a href="#" class="removeBookLink">Remove a Book</a>
           </li>
         </ul>
       </nav>
@@ -87,24 +87,98 @@
             </div>
           </div>
         </nav>
-        <div id="mystyle">
-        <h2 id="heading2">Hello World</h2>
-        <button id="check">Click me</button>
+        <!-- making forms -->
+        <div id="row">
+          <div class="col-12">
+            <h2 class="form-header text-center text-primary">Add a new Book</h2>
+            <!-- add book form -->
+            <form class="add-book-form">
+            <label for="bookName">Book Name</label>  
+            <input
+              name="bookName"
+              type="text"
+              id="bookName"
+              class="form-control form-element"
+              placeholder="Enter book name"
+              required
+              >
+              <label for="authorName">Author Name</label>  
+            <input
+              type="text"
+              name="authorName"
+              id="authorName"
+              class="form-control form-element"
+              placeholder="Enter book author name"
+              required
+              >
+              <label for="numberOfCopies">No of copies</label>  
+            <input
+              type="number"
+              name="numberOfCopies"
+              id="numberOfCopies"
+              class="form-control form-element"
+              placeholder="Enter number of copies"
+              required
+              >
+              <label for="bookEdition">Edition</label>  
+            <input
+              type="text"
+              name="bookEdition"
+              id="bookEdition"
+              class="form-control form-element"
+              placeholder="Enter book Edition"
+              required
+              >
+              <label for="bookCategory">Category</label>  
+            <input
+              type="text"
+              name="bookCategory"
+              id="bookCategory"
+              class="form-control form-element"
+              placeholder="Enter book category"
+              required
+              >
+              <button type="submit" name="new-book-submit"
+               class="btn btn-primary btn-block form-element">
+                Add new book
+              </button>
+            </form>
+            <!-- search-book-form -->
+            <form class="search-book-form">
+              <label for="searchBook">Search a book to edit</label>  
+            <input
+              type="text"
+              name="searchBook"
+              id="seachBook"
+              class="form-control form-element"
+              placeholder="Enter book name"
+              required
+              >
+              <button type="submit" name="new-book-submit"
+               class="btn btn-primary btn-block form-element">
+                Search
+              </button>
+            </form>
+          </div>
         </div>
       </div>
     </div>
     <!-- jQuery CDN  -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <!-- Popper.JS -->
+   <!-- Bootstrap CDN-->
     <script
-      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"
-      integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ"
+      src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+      integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
       crossorigin="anonymous"
     ></script>
-    <!-- Bootstrap JS -->
     <script
-      src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"
-      integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm"
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+      integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+      integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
       crossorigin="anonymous"
     ></script>
     <!-- nav bar script -->
