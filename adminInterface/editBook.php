@@ -15,22 +15,6 @@
   </head>
 
   <body>
-    <?php
-    //class to search a book
-    class SearchBook{
-      private $book;
-      public $notFoundError;
-
-    }//end of searchBook class
-
-
-    //search book form submit
-    $searchBookObj=new SearchBook();
-    if (isset($_POST['search-book'])){
-      $searchBookObj->notFoundError="Error";
-    }
-
-    ?>
     <?php include("dashBoardNav.php"); ?>
         <!-- making forms -->
         <div id="row">
@@ -40,7 +24,7 @@
             <form class="edit-book-form" method="post" 
             action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
             <div class="text-center text-info confirmMessage animated rollIn">
-              <?php echo $searchBookObj->notFoundError?>
+              
             </div>
             <label for="bookName">Book Name</label>  
             <input

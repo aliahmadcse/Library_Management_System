@@ -15,14 +15,34 @@
   </head>
 
   <body>
+      <?php
+      class SearchBook{
+      private $book;
+      public $notFoundError;
+      
+      public function setError(){
+          $this->notFoundError="Error";
+      }
+    }//end of searchBook class
 
+
+    //search book form submit
+    $searchBookObj=new SearchBook();
+    if (isset($_POST["search-book"])){
+      $searchBookObj->setError();
+    }
+    ?>
     <?php include("dashBoardNav.php"); ?>
         <!-- making forms -->
         <div id="row">
           <div class="col-12">
             <h2 class="form-header text-center text-primary">Edit a book</h2>
             <!-- search-book-form -->
-            <form class="search-book-form" action="editBook.php">
+            <form class="search-book-form" 
+            action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?> ">
+            <div class="text-center text-info confirmMessage animated rollIn">
+              <?php echo $searchBookObj->notFoundError ?>
+            </div>
               <label for="searchBook">Search a book to edit</label>  
             <input
               type="text"
@@ -40,8 +60,5 @@
           </div>
         </div>
         <script src="js/appendBody.js"></script>
-        <script>
-        
-        </script>
   </body>
 </html>
