@@ -90,12 +90,25 @@
         }
     } //end of class AddNewBook
 
-//new book form submit
+    //class to search a book
+    class SearchBook{
+      private $book;
+      public $notFoundError;
+
+    }//end of searchBook class
+
+    //new book form submit
     $addNewBookObj = new AddNewBook();
     if (isset($_POST['new-book-submit'])) {    
         $addNewBookObj->getFormData();
         $addNewBookObj->insertData();
       }
+
+    //search book form submit
+    $searchBookObj=new SearchBook();
+    if (isset($_POST['search-book'])){
+      echo "search book";
+    }
 
     ?>
     <div class="wrapper">
@@ -221,7 +234,7 @@
               placeholder="Enter book name"
               required
               >
-              <button type="submit" name="new-book-submit"
+              <button type="submit" name="search-book" id="searchButton"
                class="btn btn-primary btn-block form-element">
                 Search
               </button>
@@ -231,7 +244,7 @@
       </div>
     </div>
     <!-- jQuery CDN  -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.4.1.min.js"></script>
    <!-- Bootstrap CDN-->
     <script
       src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
@@ -247,9 +260,10 @@
       src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
       integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
       crossorigin="anonymous"
-    ></script>
+    ></script> -->
     <!-- nav bar script -->
-    <script src="js/adminDashboard.js"></script>
+    <script src="adminDashboard.js"></script>
     <script src="js/adminDashboardNav.js"></script>
+
   </body>
 </html>
