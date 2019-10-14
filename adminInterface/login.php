@@ -40,7 +40,7 @@
           }
           public function validateUser(){
               if ($this->userName==="admin" && $this->password==="admin"){
-                  header("location:adminDashboard.php");
+                  header("location:addNewBook.php");
               }
               else{
                   $this->error="Credentials does not match";
