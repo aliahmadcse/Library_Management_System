@@ -24,6 +24,7 @@
       private $edition;
       private $category;
       private $bookId;
+      public $confirmMessage;
 
       public function getFormData(){
         $this->bookName=$_POST["bookName"];
@@ -52,11 +53,8 @@
           WHERE `book_id`='$this->bookId'";
 
         if ($conn->query($sql) === TRUE) {
-          session_unset();
-          echo '<script>
-          alert("Book edited successfully");
-          </script>';
-          header("location:searchBook.php");
+          // session_unset();
+          $this->confirmMessage="Book edited successfully";
         }
         else {
           echo "Error: " . $sql . "<br>" . $conn->error;
@@ -79,7 +77,7 @@
             <form class="edit-book-form" method="post" 
             action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
             <div class="text-center text-info confirmMessage animated rollIn">
-              
+              <?php echo $editBookObj->confirmMessage; ?>
             </div>
             <label for="bookName">Book Name</label>  
             <input
