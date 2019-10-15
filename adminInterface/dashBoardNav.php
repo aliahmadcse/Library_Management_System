@@ -51,7 +51,7 @@
             <a href="searchBook.php" class="editBookLink">Edit a Book</a>
           </li>
           <li>
-            <a href="removeBook.php" class="removeBookLink">Remove a Book</a>
+            <a href="searchBookforDelete.php" class="removeBookLink">Remove a Book</a>
           </li>
         </ul>
       </nav>
