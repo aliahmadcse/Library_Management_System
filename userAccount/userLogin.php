@@ -60,7 +60,7 @@
       $conn->close();
       if ($result->num_rows>0){
         $_SESSION["email"]=$this->email;
-        header("location: ../userInterface/interface.php");
+        header("location: ../userInterface/searchBook.php");
       }
       else{
         $_SESSION["email"]=null;
